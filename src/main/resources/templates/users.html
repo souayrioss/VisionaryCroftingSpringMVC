@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-2">
+    <div class="card">
+        <div class="card-header">List des users</div>
+        <div>
+            <form method="get" th:action="@{index}">
+                <label th:value="${keyword}"></label>
+                <select name="keyword" >
+                    <option value="client">client</option>
+                    <option value="supplier">supplier</option>
+                </select>
+                <button type="submit">Chercher</button>
+            </form>
+
+            <table class="table">
+                <thead >
+                <tr >
+                    <th>UUID</th>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Role</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user:${users}">
+                    <td th:text="${user.uuid}"></td>
+                    <td th:text="${user.fullName}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td th:text="${user.phone}"></td>
+                    <td th:text="${user.role}"></td>
+                    <td>
+                        <a class="btn btn-danger" th:href="@{delete(id=${user.getId()},keyword=${keyword},page=${currentPage})}">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <ul class="nav nav-pills">
+                <li th:each="page,status:${pages}">
+                    <a th:class="${status.index==currentPage?'btn btn-warning ms-1':'btn btn-outline-warning ms-1'}"
+                       th:text="${status.index}"
+                       th:href="@{index(page=${status.index},keyword=${keyword})}"
+                    ></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

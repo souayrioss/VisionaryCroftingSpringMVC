@@ -17,6 +17,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 @Data
 @Entity
 @NoArgsConstructor
@@ -24,7 +26,7 @@ import lombok.ToString;
 @ToString
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class User  {
+public class User  implements Serializable {
     @Id
     @SequenceGenerator(name = "user_seq",sequenceName = "user_seq",initialValue = 1,allocationSize = 1)
     @GeneratedValue(generator = "user_seq",strategy = GenerationType.SEQUENCE)

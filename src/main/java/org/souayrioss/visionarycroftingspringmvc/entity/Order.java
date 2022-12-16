@@ -16,6 +16,7 @@ import javax.persistence.Table;
 
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +26,7 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 @Table(name = "orders")
-public class Order {
+public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
@@ -38,7 +39,6 @@ public class Order {
     @ManyToOne
     private Client client;
     @OneToMany(mappedBy = "order")
-    @JsonIgnore
     private List<OrderItem> orderItems;
     private OrderStatusEnum status;
     public enum OrderStatusEnum{

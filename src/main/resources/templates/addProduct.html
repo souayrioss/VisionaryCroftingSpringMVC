@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" href="/webjars/bootstrap/5.2.2/css/bootstrap.min.css">
+</head>
+<body>
+<form method="post" th:action="@{product/add}" >
+  <label>Reference :</label>
+  <input type="text" name="reference">
+  <br>
+  <label>Title :</label>
+  <input type="text" name="title">
+  <br>
+  <label>Description :</label>
+  <input type="text" name="description">
+  <br>
+  <label>Initial Price :</label>
+  <input type="text" name="initialPrice">
+  <br>
+  <label>Quantity :</label>
+  <input type="number" name="quantity">
+  <br>
+  <label>Stock Reference :</label>
+  <select name="stock">
+    <option th:each="stock:${stocks}" th:value="${stock.getId()}" th:text="${stock.name}" value=""/>
+  </select>
+  <br>
+  <button type="submit">save</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1 th:text="'Bonjour Mr.'+${session.userconnect.get().getFullName()}"></h1>
+<h3 th:text="${product.getTitle()}"></h3>
+<p th:text="${product.getInitialPrice()}"></p>
+<p th:text="${product.getQuantity()}" id="quantityStock"></p>
+<p th:text="${product.getDescription()}" id></p>
+<label>Quantite</label>
+<input id="reference" name="reference" type="hidden" th:value="${product.getReference()}">
+<input value="1" name="quantity" type="number" id="quantity">
+<button id="cardButton">add to cart</button>
+<a th:href="@{/orderItem/panier}">
+    voir panier
+</a>
+
+
+
+
+
+</body>
+<script>
+    let array = [];
+    let quantityStock = document.getElementById("quantityStock").textContent;
+    let quantity = document.getElementById("quantity").value;
+    let reference = document.getElementById("reference").value;
+    const cardButton = document.getElementById("cardButton");
+    if (localStorage.getItem('OrderItem') === null) {
+        localStorage.setItem("OrderItem",JSON.stringify(array));
+    }
+        cardButton.addEventListener("click",function() {
+            quantity = document.getElementById("quantity").value;
+            if (quantityStock < quantity){
+                alert("La quantity que vous choisissez est non disponible au stock");
+            }else{
+
+                    array = JSON.parse(localStorage.getItem('OrderItem'));
+                    let orderItem = {
+                        product:reference,
+                        quantity:quantity,
+                    }
+
+                    if(array.filter(item=>item.product==orderItem.product).length==1)
+                    {
+                        let oldItem=array.filter(item=>item.product==orderItem.product)[0]
+                        array=array.filter(item=>item.product!=orderItem.product);
+                        oldItem.quantity= (+oldItem.quantity)+(+orderItem.quantity)
+                        array.push(oldItem);
+
+                    }else{
+                        array.push(orderItem);
+                    }
+
+                    localStorage.setItem("OrderItem",JSON.stringify(array));
+                    console.log(localStorage.getItem("OrderItem"));
+
+            }
+        });
+
+</script>
+</html>

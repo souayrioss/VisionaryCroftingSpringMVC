@@ -7,19 +7,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.io.Serializable;
 
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-public class Product {
+public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
@@ -34,5 +35,18 @@ public class Product {
     @Column(nullable = false)
     private int quantity;
     @ManyToOne
+    @JsonIgnore
     private Stock stock;
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", reference='" + reference + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", initialPrice=" + initialPrice +
+                ", quantity=" + quantity +
+                '}';
+    }
 }

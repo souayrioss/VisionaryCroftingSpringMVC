@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1 th:text="'Bonjour Mr.'+${session.userconnect.get().getFullName()}"></h1>
+<p th:text="${session.userconnect.get().getUuid()}" id="uuid"></p>
+<div class="container d-flex " id="panier">
+
+        </div>
+        <button class="btn btn-success m-4" onclick="confirmCommand()">Validate  Command</button>
+</body>
+<script>
+    const panier = document.getElementById("panier");
+    const uuid = document.getElementById("uuid").textContent;
+    array = JSON.parse(localStorage.getItem('OrderItem'));
+    for (let i=0;i<array.length;i++){
+        panier.innerHTML+= '<div class="card my-3"><label>Produit</label><input name="refPrd" type="text" disabled value="'+array[i].product+'">'+'<br>'+ '<label>Quantity</label><input name="refPrd" type="text" disabled value="'+array[i].quantity+'">'+ '<br></div>';
+    }
+    function confirmCommand(){
+        let cartProduct = JSON.parse(localStorage.getItem("OrderItem"));
+        let command = {
+            orderItems: [
+
+            ],
+            client: {
+                uuid: uuid
+            }
+        }
+        cartProduct.forEach(p=>{
+            let item = {
+                product: {
+                    reference: p.product
+                },
+                quantity: p.quantity
+            }
+            command.orderItems.push(item);
+        })
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify(command);
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch("http://localhost:9000/order/save", requestOptions)
+            .then(response => response.text())
+            .then(result => {
+                console.log("result", result)
+            })
+            .catch(error => console.log('error', error));
+
+    }
+</script>
+</html>
