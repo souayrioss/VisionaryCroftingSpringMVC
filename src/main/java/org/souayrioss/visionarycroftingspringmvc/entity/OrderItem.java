@@ -13,16 +13,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "order_item")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class OrderItem {
+public class OrderItem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id ", nullable = false)
+    @Column(name = "id", nullable = false)
     private Long id;
     @ManyToOne
     private Product product;

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="wrapper container mt-5 " style="max-width: 500px ;">
+    <div class="auth-content">
+        <div class="">
+            <div class="text-center">
+                <h6 class="mb-4 text-muted">Login to your account</h6>
+                <form th:action="@{login}" method="post">
+                    <div class="mb-3 text-start">
+                        <label for="email" class="form-label">Email adress</label>
+                        <input id ="email" name="email" type="email" class="form-control" placeholder="Enter Email" required>
+                    </div>
+                    <div class="mb-3 text-start">
+                        <label for="password" class="form-label">Password</label>
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Password" required>
+                    </div>
+                    <button class="btn btn-primary shadow-2 mb-4">Login</button>
+                </form>
+                <p class="mb-0 text-muted">Don't have account yet? <a href="signup.html">Signup</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
